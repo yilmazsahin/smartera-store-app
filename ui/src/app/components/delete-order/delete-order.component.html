@@ -1,0 +1,32 @@
+<div class="container">
+  <h2>Orders</h2>
+  <div class="page-buttons">
+    <button routerLink="/customers">Customers</button>
+    <button routerLink="/orders">Orders</button>
+  </div>
+  <div>
+    <form (ngSubmit)="deleteOrder()">
+      <div>
+        <label for="selectOrderForDelete">Select Order ID for delete</label>
+        <select
+          id="selectOrderForDelete"
+          name="selectedOrderId" 
+          [(ngModel)]="selectedOrderId"
+          required
+        >
+          <option *ngFor="let order of orders" [value]="order.id">
+            {{ order.id }}
+          </option>
+        </select>
+      </div>
+      <div class="delete-btn">
+        <button type="submit">Delete</button>
+      </div>
+    </form>
+  </div>
+  <div class="page-buttons db-setting-btns">
+    <button routerLink="/new-order">Add Order</button>
+    <button routerLink="/edit-order">Edit Order</button>
+    <button routerLink="/delete-order">Delete Order</button>
+  </div>
+</div>

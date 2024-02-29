@@ -1,0 +1,105 @@
+<div class="container">
+  <h2>My Profile</h2>
+
+  <div class="buttons">
+    <div class="page-buttons db-setting-btns">
+      <button routerLink="/home-page">Main Page</button>
+      <button routerLink="/customer-orders">My Orders</button>
+    </div>
+    <div>
+      <button (click)="logout()">Log out</button>
+    </div>
+  </div>
+
+  <div class="save-customer-area">
+    <table>
+      <thead>
+        <tr>
+          <th>Customer ID</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+          <th>Phone Number</th>
+          <th>Role</th>
+          <!-- <th>Password</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="customerData">
+          <td>{{ customerData.id }}</td>
+          <td>{{ customerData.firstName }}</td>
+          <td>{{ customerData.lastName }}</td>
+          <td>{{ customerData.email }}</td>
+          <td>{{ customerData.phoneNumber }}</td>
+          <td>{{ customerData.role }}</td>
+          <!-- <td>{{ customerData.password }}</td> -->
+          <div class="edit-delete-btn">
+            <button (click)="editCustomer(customerData.id)">Edit</button>
+            <!-- <button (click)="deleteCustomer(customerData.id)">Delete</button> -->
+          </div>
+        </tr>
+        <tr *ngIf="showEditForm">
+          <td colspan="6">
+            <!-- Düzenleme Formu -->
+            <form (ngSubmit)="saveCustomerChanges()" #editForm="ngForm">
+              <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input
+                  type="text"
+                  id="firstName"
+                  name="firstName"
+                  [(ngModel)]="editedCustomer.firstName"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input
+                  type="text"
+                  id="lastName"
+                  name="lastName"
+                  [(ngModel)]="editedCustomer.lastName"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  [(ngModel)]="editedCustomer.email"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="phoneNumber">Phone Number</label>
+                <input
+                  type="tel"
+                  id="phoneNumber"
+                  name="phoneNumber"
+                  [(ngModel)]="editedCustomer.phoneNumber"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn btn-primary">
+                Save Changes
+              </button>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                (click)="cancelEdit()"
+              >
+                Cancel
+              </button>
+            </form>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

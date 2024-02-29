@@ -1,0 +1,51 @@
+<div class="container">
+  <h2>My Orders</h2>
+  <div class="buttons">
+    <div class="page-buttons db-setting-btns">
+      <button routerLink="/home-page">Main Page</button>
+      <button routerLink="/customer-profile">My Profile</button>
+    </div>
+    <div>
+      <button (click)="logout()">Log out</button>
+    </div>
+  </div>
+
+  <div *ngIf="orders && orders.length > 0; else noOrdersTemplate">
+    <table>
+      <thead>
+        <tr>
+          <td>Order Tracking Number</td>
+          <td>Shipping Address</td>
+          <td>Billing Address</td>
+          <td>Date Created</td>
+          <td>Last Updated</td>
+          <td>Total Quantity</td>
+          <td>Total Price</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of orders; let i = index">
+          <td>{{ order.orderTrackingNumber }}</td>
+          <td>{{ order.billingAddress }}</td>
+          <td>{{ order.shippingAddress }}</td>
+          <td>{{ order.dateCreated }}</td>
+          <td>{{ order.lastUpdated }}</td>
+          <td>{{ order.totalQuantity }}</td>
+          <td>{{ order.totalPrice }}</td>
+          <td>
+            <div class="edit-delete-btn">
+              <button (click)="editOrder(order.id)">Edit</button>
+              <button (click)="deleteOrder(order.id)">Delete</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <ng-template #noOrdersTemplate>
+    <div>
+      <p>Siparişiniz bulunmamaktadır.</p>
+      <a href="#">Sipariş vermek için lütfen buraya tıklayınız.</a>
+    </div>
+  </ng-template>
+</div>

@@ -1,0 +1,46 @@
+<div class="container">
+  <h2>Orders</h2>
+  <div class="buttons">
+    <div class="page-buttons">
+      <button routerLink="/customers">Customers</button>
+      <!-- <button routerLink="/orders">Orders</button> -->
+      <button routerLink="/new-order">New Order</button>
+      <button routerLink="/product">Products</button>
+    </div>
+    <div class="page-buttons db-setting-btns">
+      <button (click)="logout()">Logout</button>
+    </div>
+  </div>
+  <div>
+    <table>
+      <thead>
+        <tr>
+          <td>Customer Id</td>
+          <td>Order Tracking Number</td>
+          <td>Shipping Address</td>
+          <td>Billing Address</td>
+          <td>Date Created</td>
+          <td>Last Updated</td>
+          <td>Total Quantity</td>
+          <td>Total Price</td>
+          <td></td>
+          <td></td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of orders">
+          <td>{{ order.customerId }}</td>
+          <td>{{ order.orderTrackingNumber }}</td>
+          <td>{{ order.billingAddress }}</td>
+          <td>{{ order.shippingAddress }}</td>
+          <td>{{ order.dateCreated }}</td>
+          <td>{{ order.lastUpdated }}</td>
+          <td>{{ order.totalQuantity }}</td>
+          <td>{{ order.totalPrice }}</td>
+          <td><button (click)="editOrder(order.id)">Edit</button></td>
+          <td><button (click)="deleteOrder(order.id)">Delete</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

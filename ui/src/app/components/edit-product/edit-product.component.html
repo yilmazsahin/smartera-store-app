@@ -1,0 +1,42 @@
+<div class="container">
+  <h2>Products</h2>
+  <div class="buttons">
+    <div class="page-buttons">
+      <button routerLink="/customers">Customers</button>
+      <button routerLink="/orders">Orders</button>
+      <button routerLink="/product">Products</button>
+      <button routerLink="/new-product">New Product</button>
+    </div>
+    <div>
+      <button (click)="logout()">Logout</button>
+    </div>
+  </div>
+
+  <div class="save-product-area">
+    <div>
+      <label for="name">Name</label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        [(ngModel)]="product.name"
+        required
+      />
+    </div>
+    <div>
+      <label for="Price">Price</label>
+      <input
+        type="text"
+        id="price"
+        name="price"
+        [(ngModel)]="product.price"
+        required
+      />
+
+      <div class="save-customer-btn">
+        <button (click)="editProduct()" type="submit">Save Changes</button>
+      </div>
+    </div>
+    <div class="page-buttons db-setting-btns"></div>
+  </div>
+</div>

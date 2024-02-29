@@ -1,0 +1,97 @@
+table {
+  width: 80%;
+  border-collapse: collapse;
+  border: 1px solid #ddd;
+  justify-content: center;
+  margin: auto;
+}
+
+th {
+  background-color: #f2f2f2;
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tr:nth-child(odd) {
+  background-color: #ffffff;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.page-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+}
+.page-buttons button {
+  margin: 0 10px;
+}
+div {
+  margin-bottom: 10px;
+}
+
+label {
+  display: inline-block;
+  width: 150px;
+}
+
+input[type="text"],
+input[type="tel"],
+input[type="email"],
+select,
+input[type="password"] {
+  width: 200px;
+  margin-bottom: 5px;
+}
+
+button {
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+.container {
+  max-width: 1200px;
+  width: 80%;
+  display: flex;
+  margin: auto;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.edit-delete-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: none;
+  flex-wrap: wrap;
+  flex-direction: row;
+  margin-bottom: 0;
+}
+.edit-delete-btn button {
+  width: 60px;
+  margin: 10px;
+}
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  max-width: 1000px;
+}

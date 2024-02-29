@@ -1,0 +1,84 @@
+<div class="container">
+  <h2>Customers</h2>
+  <div class="buttons">
+    <div class="page-buttons">
+      <button routerLink="/customers">Customers</button>
+      <button routerLink="/orders">Orders</button>
+      <!-- <button routerLink="/new-customer">New Customer</button> -->
+    </div>
+    <div class="page-buttons db-setting-btns">
+      <button (click)="logout()">Logout</button>
+    </div>
+  </div>
+  <div class="save-customer-area">
+    <form (ngSubmit)="saveCustomer()">
+      <div>
+        <label for="firstName">First Name:</label>
+        <input
+          type="text"
+          id="firstName"
+          name="firstName"
+          [(ngModel)]="customer.firstName"
+          required
+        />
+      </div>
+      <div>
+        <label for="lastName">Last Name:</label>
+        <input
+          type="text"
+          id="lastName"
+          name="lastName"
+          [(ngModel)]="customer.lastName"
+          required
+        />
+      </div>
+      <div>
+        <label for="phoneNumber">Phone Number:</label>
+        <input
+          type="tel"
+          id="phoneNumber"
+          name="phoneNumber"
+          [(ngModel)]="customer.phoneNumber"
+          required
+        />
+      </div>
+      <div>
+        <label for="email">Email:</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          [(ngModel)]="customer.email"
+          required
+        />
+      </div>
+      <div>
+        <label for="authorizationLevel">Authorization Level:</label>
+        <select
+          id="authorizationLevel"
+          name="authorizationLevel"
+          [(ngModel)]="customer.authorizationLevel"
+          required
+        >
+          <option value="ADMIN">Admin</option>
+          <option value="CUSTOMER">Customer</option>
+          <option value="GUEST">Guest</option>
+        </select>
+      </div>
+      <div>
+        <label for="password">Password:</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          [(ngModel)]="customer.password"
+          required
+        />
+      </div>
+      <div class="save-customer-btn">
+        <button type="submit">Save Customer</button>
+      </div>
+    </form>
+  </div>
+  <div class="page-buttons db-setting-btns"></div>
+</div>

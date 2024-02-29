@@ -1,0 +1,121 @@
+<div class="container">
+  <h2>Orders</h2>
+  <div class="buttons">
+    <div class="page-buttons">
+      <button routerLink="/orders">Customers</button>
+      <button routerLink="/orders">Orders</button>
+    </div>
+    <div>
+      <button (click)="loguot()">Logout</button>
+    </div>
+  </div>
+  <div>
+    <div class="save-order-area">
+      <form>
+        <div>
+          <label for="customerId">Select Customer</label>
+          <select
+            id="customerId"
+            name="customerId"
+            [(ngModel)]="selectedCustomerId"
+            required
+          >
+            <option *ngFor="let customer of customers" [value]="customer.id">
+              {{ customer.id }} - {{ customer.firstName }} {{ customer.lastName }}
+            </option>
+          </select>
+        </div>
+        <div>
+          <label for="billingAddress">Billing Address:</label>
+          <input
+            type="text"
+            id="billingAddress"
+            name="billingAddress"
+            [(ngModel)]="order.billingAddress"
+            required
+          />
+        </div>
+        <div>
+          <label for="shippingAddress">Shipping Address:</label>
+          <input
+            type="text"
+            id="shippingAddress"
+            name="shippingAddress"
+            [(ngModel)]="order.shippingAddress"
+            required
+          />
+        </div>
+        <!--<div>
+          <label for="dateCreated">Date Created: </label>
+          <input
+            type="date"
+            id="dateCreated"
+            name="dateCreated"
+            [(ngModel)]="order.dateCreated"
+            required
+          />
+        </div>
+        <div>
+          <label for="lastUpdated">Last Updated :</label>
+          <input
+            type="date"
+            id="lastUpdated"
+            name="lastUpdated"
+            [(ngModel)]="order.lastUpdated"
+            required
+          />
+        </div>-->
+        <!-- <div>
+           <label for="productName">Product :</label>
+           <select [(ngModel)]="selectedProductId" name="selectedProduct">
+             <option *ngFor="let product of products" [value]="product.id">
+               {{ product.name }}
+             </option>
+           </select>
+           <div>
+             <label for="quantity">Quantity : </label>
+             <button (click)="decreaseQuantity()">-</button>
+             <input
+               type="number"
+               [(ngModel)]="selectedProducts[selectedProductId]"
+               min="0"
+               name="selectedProductQuantity"
+             />
+             <button (click)="increaseQuantity()">+</button>
+           </div>
+         </div>-->
+        <div class="save-order-btn">
+          <button type="button" (click)="saveOrder()">Save Order</button>
+        </div>
+      </form>
+
+      <div>
+        <table>
+          <thead>
+          <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th></th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let product of order.products">
+            <td>{{ product.name }}</td>
+            <td>{{ product.price }}</td>
+            <td>{{ product.size }}</td>
+            <td>
+              <button (click)="increaseProductSize(product.id)">+</button>
+              <button (click)="decreaseProductSize(product.id)">-</button>
+            </td>
+
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <app-product [productList]="order.products" [hideActions]="true"
+                   (onProductSelected)="onProductSelected($event)"/>
+    </div>
+  </div>
+</div>

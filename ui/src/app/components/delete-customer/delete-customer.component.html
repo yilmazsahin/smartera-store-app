@@ -1,0 +1,32 @@
+<div class="container">
+  <h2>Customers</h2>
+  <div class="page-buttons">
+    <button routerLink="/customers">Customers</button>
+    <button routerLink="/orders">Orders</button>
+  </div>
+  <div>
+    <form (ngSubmit)="deleteCustomer()">
+      <div>
+        <label for="selectCustomerForDelete">Select Customer ID for delete</label>
+        <select
+          id="customersFromDB"
+          name="selectedCustomerId"
+          [(ngModel)]="selectedCustomerId"
+          required
+        >
+          <option *ngFor="let customer of customers" [value]="customer.id">
+            {{ customer.id }}
+          </option>
+        </select>
+      </div>
+      <div class="delete-btn">
+        <button type="submit">Delete</button>
+      </div>
+    </form>
+  </div>
+  <div class="page-buttons db-setting-btns">
+    <button routerLink="/new-customer">Add Customer</button>
+    <button routerLink="/edit-customer">Edit Customer</button>
+    <button routerLink="/delete-customer">Delete Customer</button>
+  </div>
+</div>

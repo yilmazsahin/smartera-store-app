@@ -1,0 +1,17 @@
+com\smartera\customerservice\CustomerServiceApplication.class
+com\smartera\customerservice\config\WebClientConfig.class
+com\smartera\customerservice\service\CustomerService.class
+com\smartera\customerservice\repository\CustomerRepository.class
+com\smartera\customerservice\config\SecurityConfig.class
+com\smartera\customerservice\entity\Order.class
+com\smartera\customerservice\config\RestTemplateConfig.class
+com\smartera\customerservice\entity\LoginRequest.class
+com\smartera\customerservice\mapper\CustomerMapper.class
+com\smartera\customerservice\entity\Customer.class
+com\smartera\customerservice\entity\CustomerDTO.class
+com\smartera\customerservice\entity\GetCustomerDetail.class
+com\smartera\customerservice\service\AuthService.class
+com\smartera\customerservice\controller\CustomerController.class
+com\smartera\customerservice\config\SwaggerConfig.class
+com\smartera\customerservice\controller\LoginController.class
+com\smartera\customerservice\controller\WebController.class

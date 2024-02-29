@@ -1,0 +1,35 @@
+<div class="container">
+  <h2>products</h2>
+  <div *ngIf="!hideActions" class="buttons">
+    <div class="page-buttons">
+      <button routerLink="/customers">Customers</button>
+      <button routerLink="/orders">Orders</button>
+      <button routerLink="/new-product">New product</button>
+    </div>
+    <div class="page-buttons db-setting-btns">
+      <button (click)="logout()">Logout</button>
+    </div>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th *ngIf="hideActions"></th>
+        <th *ngIf="!hideActions"></th>
+        <th *ngIf="!hideActions"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products">
+        <td>{{ product.name }} </td>
+        <td>{{ product.price }}</td>
+        <td *ngIf="hideActions">
+          <button (click)="addToOrder(product)">Add</button>
+        </td>
+        <td *ngIf="!hideActions"><button (click)="editProduct(product.id)">Edit</button></td>
+        <td *ngIf="!hideActions"><button (click)="deleteProduct(product.id)">Delete</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
