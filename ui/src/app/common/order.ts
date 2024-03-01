@@ -6,7 +6,6 @@ export class Order {
   shippingAddress!: string;
   dateCreated!: Date;
   lastUpdated!: Date;
-  orderTrackingNumber!: string;
   totalPrice!: number;
   totalQuantity!: number;
   customerId!: string;

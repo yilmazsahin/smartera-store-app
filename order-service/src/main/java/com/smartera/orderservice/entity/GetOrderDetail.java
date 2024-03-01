@@ -12,7 +12,6 @@ import java.util.Date;
 public class GetOrderDetail {
 
     private Long id;
-    private String orderTrackingNumber;
 
     private Customer customerId;
 
@@ -28,11 +27,4 @@ public class GetOrderDetail {
 
     private String billingAddress;
 
-    public void setOrderTrackingNumber(String orderTrackingNumber) {
-        this.orderTrackingNumber = orderTrackingNumber;
-    }
-
-
-    public void setCustomerId(Long orderId) {
-    }
 }

@@ -10,10 +10,7 @@ import com.smartera.orderservice.repository.OrderRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @author yilmazsahin
@@ -45,6 +42,7 @@ public class OrderService {
     public Order saveOrder(Order order) throws Exception {
         boolean customerHasOrderAuthority = customerApi.customerHasAuthority(order.getCustomerId());
         if (customerHasOrderAuthority) {
+            order.setDateCreated(new Date());
             return orderRepository.save(order);
         }
         throw new Exception("The Customer hasn't have order authority");
@@ -59,6 +57,7 @@ public class OrderService {
             System.err.println("Order is Null");
             return null;
         }
+
         var orderOptional = orderRepository.findById(order.getId());
 
         if (orderOptional.isPresent()) {
@@ -67,6 +66,7 @@ public class OrderService {
             existsOrder.setShippingAddress(order.getShippingAddress());
             existsOrder.setTotalPrice(order.getTotalPrice());
             existsOrder.setTotalQuantity(order.getTotalQuantity());
+            existsOrder.setLastUpdated(new Date());
             return orderRepository.save(existsOrder);
         }
         return null;

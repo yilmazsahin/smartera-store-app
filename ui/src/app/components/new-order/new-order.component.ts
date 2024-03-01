@@ -28,6 +28,7 @@ export class NewOrderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     if (this.incomingOrder.id != null) {
       console.log(this.incomingOrder);
       this.order = this.incomingOrder;
@@ -61,7 +62,7 @@ export class NewOrderComponent implements OnInit {
   saveOrder() {
     this.order.customerId = this.selectedCustomerId;
 
-    this.apiService
+    this.apiService 
       .createOrder(this.order)
       .pipe(
         catchError((error) => {

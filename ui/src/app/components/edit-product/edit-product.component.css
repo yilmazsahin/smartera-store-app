@@ -76,9 +76,7 @@ button:hover {
   justify-content: center;
   align-items: center;
 }
-.orderTrackingNumberArea {
-  display: flex;
-}
+
 
 .buttons {
   display: flex;

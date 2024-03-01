@@ -15,7 +15,7 @@ import java.util.Set;
 public class Order {
 
   private Long id;
-    private String orderTrackingNumber;
+
 
 
 

@@ -21,9 +21,6 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "order_tracking_number")
-    private String orderTrackingNumber;
-
 
     @Column(name = "customer_id")
     private Long customerId;
@@ -36,10 +33,12 @@ public class Order {
 
     @Column(name = "date_created")
     @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dateCreated;
 
     @Column(name = "last_updated")
     @UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
     private Date lastUpdated;
 
     @Column(name = "shipping_address")
