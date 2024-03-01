@@ -1,10 +1,8 @@
 package com.smartera.orderservice.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import lombok.Data;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author yilmazsahin
@@ -13,12 +11,23 @@ import lombok.Data;
 
 @Table(name = "order_product")
 @Entity
-@Data
+@Getter
+@Setter
 public class OrderProduct {
 
 
     @EmbeddedId
     private OrderProductId id;
+
     @Column(name = "size")
     private int size;
+
+    @ManyToOne
+    @MapsId("orderId")
+    private Order order;
+
+    @ManyToOne
+    @MapsId("productId")
+    private Product product;
+
 }

@@ -11,6 +11,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author yilmazsahin
@@ -21,12 +22,14 @@ public class OrderService {
     private OrderRepository orderRepository;
     private final CustomerApi customerApi;
     private final OrderProductRepository orderProductRepository;
+    private final ProductService productService;
 
 
-    public OrderService(OrderRepository orderRepository, CustomerApi customerApi, OrderProductRepository orderProductRepository) {
+    public OrderService(OrderRepository orderRepository, CustomerApi customerApi, OrderProductRepository orderProductRepository, ProductService productService) {
         this.orderRepository = orderRepository;
         this.customerApi = customerApi;
         this.orderProductRepository = orderProductRepository;
+        this.productService = productService;
     }
 
 
@@ -75,8 +78,9 @@ public class OrderService {
     public List<Product> getProductsByOrderId(Long orderId) {
         Optional<Order> optionalOrder = orderRepository.findById(orderId);
         if (optionalOrder.isPresent()) {
-            Order order = optionalOrder.get();
-            return new ArrayList<>(order.getProducts());
+            return optionalOrder.get().getOrderProductList().stream()
+                    .map(OrderProduct::getProduct)
+                    .collect(Collectors.toList());
         }
         return Collections.emptyList();
     }
@@ -100,9 +104,13 @@ public class OrderService {
             orderProduct.setSize(orderProduct.getSize() + 1);
             orderProductRepository.save(orderProduct);
         } else {
+            var order = getOrderById(orderId);
+            var product = productService.getProductById(productId);
             var orderProduct = new OrderProduct();
             orderProduct.setSize(1);
             orderProduct.setId(orderProductId);
+            orderProduct.setProduct(product);
+            orderProduct.setOrder(order);
             orderProductRepository.save(orderProduct);
         }
     }
@@ -119,7 +127,7 @@ public class OrderService {
                 orderProductRepository.save(orderProduct);
             }
         } else {
-            //todo throw Exception
+            throw new NoSuchElementException("Order product couldn't find" + orderProductId);
         }
     }
 

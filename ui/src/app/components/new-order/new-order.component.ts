@@ -1,12 +1,9 @@
-import {HttpClient} from '@angular/common/http';
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges} from '@angular/core';
 import {ApiService} from '../../services/api.service';
-import {Router} from '@angular/router';
 import {catchError, of, tap} from 'rxjs';
 import {AuthService} from '../../services/auth.service';
 import {Product} from '../../common/product';
 import {Order} from "../../common/order";
-import {ProductComponent} from "../product/product.component";
 import {Customer} from "../../common/customer";
 
 @Component({
@@ -19,10 +16,7 @@ export class NewOrderComponent implements OnInit {
   @Input() incomingOrder: Order = new Order();
 
   order: Order = new Order();
-  selectedCustomerId: any;
   customers: Customer[] = [];
-  customer: any = {};
-  customerId: any;
 
   constructor(private apiService: ApiService, private authService: AuthService) {
   }
@@ -36,6 +30,15 @@ export class NewOrderComponent implements OnInit {
     this.loadCustomers();
     this.loadProducts();
 
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['incomingOrder'].previousValue !== changes['incomingOrder'].currentValue) {
+      const incomingOrder = changes['incomingOrder'].currentValue;
+      if (incomingOrder.id) {
+        this.order = incomingOrder;
+      }
+    }
   }
 
   loadCustomers() {
@@ -60,9 +63,7 @@ export class NewOrderComponent implements OnInit {
   }
 
   saveOrder() {
-    this.order.customerId = this.selectedCustomerId;
-
-    this.apiService 
+    this.apiService
       .createOrder(this.order)
       .pipe(
         catchError((error) => {
@@ -73,6 +74,13 @@ export class NewOrderComponent implements OnInit {
       .subscribe((response) => {
         console.log('Order added successfully: ', response);
         this.order = response;
+        this.order.products.forEach(product => {
+          this.apiService.addProductToOrder(this.order.id, product.id, product.size)
+            .subscribe(data => {
+              console.log(`addToProductToOrder.data: ${data}`)
+            })
+        })
+
       });
   }
 
@@ -86,19 +94,16 @@ export class NewOrderComponent implements OnInit {
 
     const exists = this.order.products.find(p => p.id === product.id);
     if (exists) {
-      this.order.products = this.order.products.map(p => {
-        if (p.id === product.id) {
-          return {...p, size: p.size + 1}
-        }
-        return p;
-      })
+      this.increaseProductSize(product.id);
     } else {
       this.order.products = [...this.order.products, product];
     }
   }
 
   increaseProductSize(productId: number) {
-    this.apiService.addProductToOrder(this.order.id, productId)
+    const product = this.order.products.find(p => p.id === productId);
+    const size = product?.size ?? 1;
+    this.apiService.addProductToOrder(this.order.id, productId, size + 1)
       .subscribe(data => {
         console.log(`addProductToOrder.data: ${data}`);
         this.order.products = this.order.products.map(product => {

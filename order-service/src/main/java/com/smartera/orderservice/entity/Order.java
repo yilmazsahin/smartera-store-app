@@ -5,9 +5,9 @@ import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 /**
  * @author yilmazsahin
@@ -47,10 +47,7 @@ public class Order {
     @Column(name = "billing_address")
     private String billingAddress;
 
-    @ManyToMany
-    @JoinTable(name = "order_product",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id"))
-    private Set<Product> products = new HashSet<>();
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "order")
+    private List<OrderProduct> orderProductList = new ArrayList<>();
 
 }

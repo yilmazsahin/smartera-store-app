@@ -3,8 +3,8 @@ package com.smartera.orderservice.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author yilmazsahin
@@ -24,6 +24,6 @@ public class Product {
     @Column(name = "price")
     private double price;
 
-    @ManyToMany(mappedBy = "products")
-    private Set<Order> orders = new HashSet<>();
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "product")
+    private List<OrderProduct> orderProductList = new ArrayList<>();
 }

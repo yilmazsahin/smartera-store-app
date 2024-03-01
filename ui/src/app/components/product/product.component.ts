@@ -54,7 +54,7 @@ export class ProductComponent implements OnInit {
 
   getProductList() {
     this.apiService.getAllProducts().subscribe((data) => {
-      console.log('Products: ' + JSON.stringify(data));
+      //console.log('Products: ' + JSON.stringify(data));
       this.products = data;
     });
   }

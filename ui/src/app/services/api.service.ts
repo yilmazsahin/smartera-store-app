@@ -132,8 +132,14 @@ export class ApiService {
     this.router.navigate(['/login']);
   }
 
-  addProductToOrder(orderId: number, productId: number): Observable<any[]> {
-    return this.http.put<any[]>(`${this.ordersApiUrl}/${orderId}/${productId}`, {});
+  addProductToOrder(orderId: number, productId: number, size: number): Observable<any[]> {
+    const orderProduct = {
+      orderId,
+      productId,
+      size,
+    };
+    return this.http.put<any[]>(`${this.ordersApiUrl}/${orderId}/${productId}`,{});
+
   }
 
   removeProductFromOrder(orderId: number, productId: number): Observable<any[]> {

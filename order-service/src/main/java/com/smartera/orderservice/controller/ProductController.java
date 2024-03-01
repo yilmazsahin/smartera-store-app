@@ -1,6 +1,8 @@
 package com.smartera.orderservice.controller;
 
 import com.smartera.orderservice.entity.Product;
+import com.smartera.orderservice.entity.ProductDTO;
+import com.smartera.orderservice.mapper.Mapper;
 import com.smartera.orderservice.service.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,9 +24,10 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Product>> getAllProducts() {
+    public ResponseEntity<List<ProductDTO>> getAllProducts() {
         List<Product> products = productService.getAllProducts();
-        return new ResponseEntity<>(products, HttpStatus.OK);
+        var dtoList = products.stream().map(Mapper::toProductDTO).toList();
+        return new ResponseEntity<>(dtoList, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

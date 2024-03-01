@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, ViewChild} from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, of, tap } from 'rxjs';
@@ -7,6 +7,7 @@ import { filter, map } from 'rxjs/operators';
 import { Order } from '../../common/order';
 import { Customer } from '../../common/customer';
 import { AuthService } from '../../services/auth.service';
+import {NewOrderComponent} from "../new-order/new-order.component";
 
 @Component({
   selector: 'app-edit-order',
@@ -15,6 +16,8 @@ import { AuthService } from '../../services/auth.service';
 })
 export class EditOrderComponent implements OnInit {
   order: Order = new Order();
+  orderEventEmitter = new EventEmitter<Order>();
+  @ViewChild(NewOrderComponent) newOrderComponent!: NewOrderComponent;
 
   constructor(
     private apiService: ApiService,
@@ -32,6 +35,10 @@ export class EditOrderComponent implements OnInit {
 
     this.loadOrders();
    // this.loadCustomers();
+  }
+
+  sendData() {
+    this.orderEventEmitter.emit(this.order);
   }
 /*
   loadCustomers() {
@@ -61,7 +68,7 @@ export class EditOrderComponent implements OnInit {
       .getOrders()
       .pipe(
         map((orders: Order[]) => {
-          console.log(orders);
+          //console.log(orders);
           return orders.filter((order) => {
             return order.id == this.order.id;
           });

@@ -17,7 +17,7 @@
           <select
             id="customerId"
             name="customerId"
-            [(ngModel)]="selectedCustomerId"
+            [(ngModel)]="order.customerId"
             required
           >
             <option *ngFor="let customer of customers" [value]="customer.id">
@@ -45,45 +45,6 @@
             required
           />
         </div>
-        <!--<div>
-          <label for="dateCreated">Date Created: </label>
-          <input
-            type="date"
-            id="dateCreated"
-            name="dateCreated"
-            [(ngModel)]="order.dateCreated"
-            required
-          />
-        </div>
-        <div>
-          <label for="lastUpdated">Last Updated :</label>
-          <input
-            type="date"
-            id="lastUpdated"
-            name="lastUpdated"
-            [(ngModel)]="order.lastUpdated"
-            required
-          />
-        </div>-->
-        <!-- <div>
-           <label for="productName">Product :</label>
-           <select [(ngModel)]="selectedProductId" name="selectedProduct">
-             <option *ngFor="let product of products" [value]="product.id">
-               {{ product.name }}
-             </option>
-           </select>
-           <div>
-             <label for="quantity">Quantity : </label>
-             <button (click)="decreaseQuantity()">-</button>
-             <input
-               type="number"
-               [(ngModel)]="selectedProducts[selectedProductId]"
-               min="0"
-               name="selectedProductQuantity"
-             />
-             <button (click)="increaseQuantity()">+</button>
-           </div>
-         </div>-->
         <div class="save-order-btn">
           <button type="button" (click)="saveOrder()">Save Order</button>
         </div>
