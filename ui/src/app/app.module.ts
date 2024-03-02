@@ -24,6 +24,8 @@ import { EditProductComponent } from './components/edit-product/edit-product.com
 import { NewProductComponent } from './components/new-product/new-product.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MatButtonModule } from '@angular/material/button';
+import {HeaderComponent} from "./components/header/header.component";
+
 const routes: Routes = [
   { path: 'orders', component: OrdersComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -60,7 +62,7 @@ const routes: Routes = [
     CustomerOrdersComponent,
     ProductComponent,
     EditProductComponent,
-    NewProductComponent,
+    NewProductComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -69,6 +71,7 @@ const routes: Routes = [
     HttpClientModule,
     ReactiveFormsModule,
     MatButtonModule,
+    HeaderComponent,
   ],
   providers: [Customer, Order, Product],
   exports: [RouterModule],

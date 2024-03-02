@@ -1,0 +1,35 @@
+version: "3"
+
+services:
+  ui:
+   build:
+    context:
+     dockerfile: ./ui
+    ports:
+    - "4200:4200"
+  mysql:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'smartera-management-system'
+      MYSQL_USER: 'root'
+      MYSQL_PASSWORD: 'Y1lmaz090909y'
+      MYSQL_ROOT_PASSWORD: 'Y1lmaz090909y'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+  customer-service:
+    build: ./customer-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+      - order-service
+  order-service:
+    build: ./order-service
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mysql
+      - customer-service

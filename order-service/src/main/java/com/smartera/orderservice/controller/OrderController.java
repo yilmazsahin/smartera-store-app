@@ -39,9 +39,10 @@ public class OrderController {
     }
 
     @PostMapping()
-    public ResponseEntity<Order> createOrder(@RequestBody Order order) throws Exception {
+    public ResponseEntity<OrderDTO> createOrder(@RequestBody Order order) throws Exception {
         Order createdOrder = orderService.saveOrder(order);
-        return ResponseEntity.ok(createdOrder);
+        var dto = Mapper.toOrderDTO(createdOrder);
+        return ResponseEntity.ok(dto);
     }
 
     @GetMapping("/{id}")

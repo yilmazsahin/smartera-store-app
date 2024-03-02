@@ -1,7 +1,11 @@
-FROM nginx:alpine-slim
-COPY ./dist /usr/share/nginx/html
-COPY ./nginx.conf /etc/nginx/nginx.conf
-EXPOSE 80
+FROM node:alpine
 
-CMD ["nginx", "-g", "daemon off;"]
+WORKDIR  /app
 
+COPY .  /app
+
+RUN npm install -g @angular/cli
+
+RUN npm install
+
+CMD ["ng", "serve", "--host", "0.0.0.0"]

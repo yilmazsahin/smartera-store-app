@@ -1,19 +1,9 @@
 <div class="container">
-  <h2>Orders</h2>
-  <div class="buttons">
-    <div class="page-buttons">
-      <button routerLink="/orders">Customers</button>
-      <button routerLink="/orders">Orders</button>
-      <button routerLink="/new-order">New Order</button>
-    </div>
-    <div class="page-buttons db-setting-btns">
-      <button (click)="logout()">Logout</button>
-    </div>
-  </div>
+  <app-header pageTitle="Edit Order"></app-header>
 
   <div>
     <div class="save-order-area">
-      <app-new-order [incomingOrder]="order"></app-new-order>
+      <app-new-order [incomingOrder]="order" hideHeader="true"></app-new-order>
     </div>
   </div>
 </div>

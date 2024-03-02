@@ -73,7 +73,4 @@ export class EditProductComponent implements OnInit {
         });
     }
   }
-  logout() {
-    this.authService.logout();
-  }
 }

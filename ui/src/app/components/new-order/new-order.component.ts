@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges} from '@angular/core';
+import {booleanAttribute, Component, EventEmitter, Input, OnInit, Output, SimpleChanges} from '@angular/core';
 import {ApiService} from '../../services/api.service';
 import {catchError, of, tap} from 'rxjs';
 import {AuthService} from '../../services/auth.service';
@@ -14,6 +14,7 @@ import {Customer} from "../../common/customer";
 export class NewOrderComponent implements OnInit {
 
   @Input() incomingOrder: Order = new Order();
+  @Input({transform: booleanAttribute}) hideHeader: boolean = false;
 
   order: Order = new Order();
   customers: Customer[] = [];
@@ -74,6 +75,9 @@ export class NewOrderComponent implements OnInit {
       .subscribe((response) => {
         console.log('Order added successfully: ', response);
         this.order = response;
+        if (!this.order.products) {
+          this.order.products = [];
+        }
         this.order.products.forEach(product => {
           this.apiService.addProductToOrder(this.order.id, product.id, product.size)
             .subscribe(data => {

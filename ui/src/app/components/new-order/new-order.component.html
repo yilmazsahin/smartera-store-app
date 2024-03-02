@@ -1,14 +1,6 @@
 <div class="container">
-  <h2>Orders</h2>
-  <div class="buttons">
-    <div class="page-buttons">
-      <button routerLink="/orders">Customers</button>
-      <button routerLink="/orders">Orders</button>
-    </div>
-    <div>
-      <button (click)="loguot()">Logout</button>
-    </div>
-  </div>
+  <app-header *ngIf="!hideHeader" pageTitle="New Order"></app-header>
+
   <div>
     <div class="save-order-area">
       <form>
@@ -50,33 +42,38 @@
         </div>
       </form>
 
-      <div>
-        <table>
-          <thead>
-          <tr>
-            <th>Name</th>
-            <th>Price</th>
-            <th></th>
-            <th></th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let product of order.products">
-            <td>{{ product.name }}</td>
-            <td>{{ product.price }}</td>
-            <td>{{ product.size }}</td>
-            <td>
-              <button (click)="increaseProductSize(product.id)">+</button>
-              <button (click)="decreaseProductSize(product.id)">-</button>
-            </td>
-
-          </tr>
-          </tbody>
-        </table>
+      <div *ngIf="!order.id">
+        <label>Save Order to see products.</label>
       </div>
+      <div *ngIf="!!order.id">
+        <div>
+          <table>
+            <thead>
+            <tr>
+              <th>Name</th>
+              <th>Price</th>
+              <th></th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let product of order.products">
+              <td>{{ product.name }}</td>
+              <td>{{ product.price }}</td>
+              <td>{{ product.size }}</td>
+              <td>
+                <button (click)="increaseProductSize(product.id)">+</button>
+                <button (click)="decreaseProductSize(product.id)">-</button>
+              </td>
 
-      <app-product [productList]="order.products" [hideActions]="true"
-                   (onProductSelected)="onProductSelected($event)"/>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <app-product [productList]="order.products" [hideActions]="true"
+                     (onProductSelected)="onProductSelected($event)"/>
+      </div>
     </div>
   </div>
 </div>

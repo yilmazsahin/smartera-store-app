@@ -1,0 +1,17 @@
+header {
+  height: 80px;
+  margin-bottom: 40px;
+  width: 100vw;
+  overflow: hidden;
+  background: #efefef;
+  color: #222;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header > nav {
+  display: flex;
+  flex-direction: row;
+  column-gap: 20px;
+}
