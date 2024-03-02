@@ -1,50 +1,57 @@
-version: '3.9'  # Specify a recent version for potential compatibility benefits
+version: '3.9'
+
+networks:
+  my-network:
 
 services:
   # MySQL service
   mysql:
-    image: mysql:8.0  # Use a specific MySQL version for consistent environment
-    restart: unless-stopped  # Restart only if the container crashes unexpectedly
+    image: mysql:8.0
+    restart: unless-stopped
     environment:
       MYSQL_DATABASE: smartera-management-system
-      MYSQL_USER: root
-      MYSQL_PASSWORD: Y1lmaz090909y
-      MYSQL_ROOT_PASSWORD: Y1lmaz090909y
+      # Replace with a dedicated user and password (not root)
+      MYSQL_PASSWORD: "Y1lmaz090909y"
     volumes:
-      - mysql_data:/var/lib/mysql  # Persist data volume for database integrity
+      - mysql_data:/var/lib/mysql
     ports:
-      - "3306:3306"  # Map the container port to the host port
-
+      - "3306:3306"
+    expose:
+      - "3306"
+    networks:
+      - my-network
 
   # Backend services (customer-service and order-service)
   customer-service:
-    build: ./customer-service  # Replace with the actual path to your backend1 code
+    build: ./customer-service
     restart: no
     depends_on:
-      - mysql  # Wait for MySQL to be ready before starting this service
+      - mysql
     ports:
       - "8080:8080"
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/smartera-management-system  # Connect to MySQL
-
+    networks:
+      - my-network
 
   order-service:
-    build: ./order-service  # Replace with the actual path to your backend2 code
-    restart: no  # Consider restarting only when changes occur
+    build: ./order-service
+    restart: no
     depends_on:
-      - mysql  # Wait for MySQL to be ready before starting this service
+      - mysql
     ports:
       - "8081:8081"
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/smartera-management-system  # Connect to MySQL
+    networks:
+      - my-network
+
   # Angular application
   ui:
-    build: ./ui  # Replace with the actual path to your Angular code
+    build: ./ui
     restart: no
     ports:
       - "4200:4200"
     volumes:
-      - ./ui:/app  # Mount the entire Angular project directory for development convenience
+      - ./ui:/app
+    networks:
+      - my-network
 
 # Volume definition for persistent data
 volumes:
