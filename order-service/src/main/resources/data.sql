@@ -82,7 +82,4 @@ INSERT INTO product (product_name, quantity) VALUES ('Kalem Seti', 15);
 INSERT INTO product (product_name, quantity) VALUES ('Dosya', 5);
 
 
-INSERT INTO customers (email, first_name, last_name, phone_number, authorization_level, password, order_authority)
-SELECT 'administrator@mail.com', 'Admin', 'Administrator', '05555555555', 'ADMIN', '12345', true
-FROM dual
-WHERE NOT EXISTS (SELECT * FROM customers WHERE email = 'administrator@mail.com');
+
