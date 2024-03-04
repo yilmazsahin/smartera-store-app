@@ -62,8 +62,10 @@
               <td>{{ product.price }}</td>
               <td>{{ product.size }}</td>
               <td>
-                <button (click)="increaseProductSize(product.id)">+</button>
-                <button (click)="decreaseProductSize(product.id)">-</button>
+                <div class="buttonsForQuantity"></div>
+
+                <button class="increaseProductSize" (click)="increaseProductSize(product.id)">+</button>
+                <button class="decreaseProductSize" (click)="decreaseProductSize(product.id)">-</button>
               </td>
 
             </tr>

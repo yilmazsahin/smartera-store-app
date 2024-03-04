@@ -1,0 +1,21 @@
+#spring:
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/smartera-management-system
+#    username: root
+#    password: Y1lmaz090909y
+#  jpa:
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.MySQL8Dialect
+#    hibernate:
+#      ddl-auto: update
+#  application:
+#    name: order-service
+#
+#server:
+#  port: 8081
+#
+#springdoc:
+#  swagger-ui:
+#    path: /swagger-ui.html

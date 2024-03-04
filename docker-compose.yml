@@ -10,12 +10,11 @@ services:
     restart: unless-stopped
     environment:
       MYSQL_DATABASE: smartera-management-system
-      # Replace with a dedicated user and password (not root)
       MYSQL_PASSWORD: "Y1lmaz090909y"
     volumes:
       - mysql_data:/var/lib/mysql
     ports:
-      - "3306:3306"
+      - "3307:3306"
     expose:
       - "3306"
     networks:
@@ -34,7 +33,7 @@ services:
 
   order-service:
     build: ./order-service
-    restart: no
+    restart: unless-stopped
     depends_on:
       - mysql
     ports:

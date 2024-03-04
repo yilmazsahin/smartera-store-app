@@ -68,8 +68,8 @@ export class ProductComponent implements OnInit {
     this.authService.logout();
   }
 
-  removeFromOrder(productId: number) {
-  }
+  // removeFromOrder(productId: number) {
+  // }
 
   addToOrder(product: Product) {
     this.onProductSelected.emit(product);

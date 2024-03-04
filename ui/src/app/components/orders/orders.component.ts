@@ -47,9 +47,8 @@ export class OrdersComponent implements OnInit {
   }
 
   deleteOrder(orderId: number) {
-    // todo delete yap burda.
     console.log('delete order: ' + orderId);
-    if (orderId !== null) {
+    if (orderId !== null) { 
       this.apiService.deleteOrder(orderId).pipe(
         catchError((error) => {
           console.error('Error for delete order: ', error);
@@ -65,6 +64,7 @@ export class OrdersComponent implements OnInit {
       console.error('Invelid order ID')
     }
   }
+
 
   logout() {
     this.authService.logout();

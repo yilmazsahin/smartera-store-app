@@ -106,9 +106,9 @@ export class ApiService {
   }
 
   deleteOrder(orderId: number): Observable<any> {
-    if (orderId == undefined) {
+    if (orderId == null) {
       console.error('Order ID is undefined');
-      return of(null);
+      return of(undefined);
     } else return this.http.delete(`${this.ordersApiUrl}/${orderId}`);
   }
 
