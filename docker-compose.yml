@@ -5,18 +5,20 @@ networks:
 
 services:
   # MySQL service
+
   mysql:
     image: mysql:8.0
-    restart: unless-stopped
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
     environment:
       MYSQL_DATABASE: smartera-management-system
-      MYSQL_PASSWORD: "Y1lmaz090909y"
+      MYSQL_USER: root
+      MYSQL_PASSWORD: Y1lmaz090909y
     volumes:
       - mysql_data:/var/lib/mysql
     ports:
       - "3307:3306"
-    expose:
-      - "3306"
+
     networks:
       - my-network
 
@@ -27,7 +29,7 @@ services:
     depends_on:
       - mysql
     ports:
-      - "3030:3306"
+      - "8080:8080"
     networks:
       - my-network
 
@@ -37,7 +39,7 @@ services:
     depends_on:
       - mysql
     ports:
-      - "3031:3306"
+      - "8081:8081"
     networks:
       - my-network
 
