@@ -2,39 +2,36 @@ version: '3.8'
 
 services:
 
-  # MySQL service
-  postgresqldb:
-    image: postgres:15.1
+  # Postgres service
+  postgresdb:
     container_name: postgresdb
+    image: postgres
     ports:
-      - "5433:5432"
+      - "5432:5432"
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: smartera-management-system
     volumes:
       - postgres-data:/var/lib/postgresql/data
-    networks:
-      - my-network
+
 
   # Backend services (customer-service and order-service)
-#  customer-service:
-#    build:
-#      context: ./customer-service
-#      dockerfile: Dockerfile
-#    image: customer-service
-#    container_name: customer-service
-#    depends_on:
-#      - postgresqldb
-#    environment:
-#      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresqldb:5433/smartera-management-system
-#      - SPRING_DATASOURCE_USERNAME=postgres
-#      - SPRING_DATASOURCE_PASSWORD=postgres
-#      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-#    ports:
-#      - "8080:8080"
-#    networks:
-#      - my-network
+  customer-service:
+    build:
+      context: ./customer-service
+      dockerfile: Dockerfile
+    image: customer-service
+    container_name: customer-service
+    depends_on:
+      - postgresdb
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresdb:5432/smartera-management-system
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    ports:
+      - "8080:8080"
 
   order-service:
     build:
@@ -43,16 +40,14 @@ services:
     image: order-service
     container_name: order-service
     depends_on:
-      - postgresqldb
+      - postgresdb
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresqldb:5433/smartera-management-system
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresdb:5432/smartera-management-system
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     ports:
       - "8081:8081"
-    networks:
-      - my-network
 
   # Angular application
 
@@ -68,9 +63,7 @@ services:
       - ./ui:/app
     depends_on:
       - order-service
-#      - customer-service
-    networks:
-      - my-network
+      - customer-service
 
 # Volume definition for persistent data
 volumes:
@@ -78,8 +71,3 @@ volumes:
     driver: local
     name: postgres-db
 
-
-networks:
-  my-network:
-    driver: bridge
-    name: internal-network
