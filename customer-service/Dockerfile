@@ -1,19 +1,24 @@
-FROM maven:3.9.5-eclipse-temurin-21-alpine AS builder
+FROM maven:3.9.6 AS builder
+
+USER root
 
 WORKDIR /app
+
+COPY src ./
 
 COPY pom.xml ./
 
-RUN mvn dependency:go-offline
 
-COPY src src
-RUN mvn clean package -DskipTests
+COPY src ./
+RUN mvn  clean package -Dmaven.test.skip
 
-FROM eclipse-temurin:21.0.2_13-jre-jammy
-MAINTAINER yilmaz.sahin
+FROM openjdk:21
 
-WORKDIR /app
 
-COPY --from=builder ./target/customer-service.jar /app/customer-service.jar
+WORKDIR /app/
 
-ENTRYPOINT ["java","-jar","/app/customer-service.jar"]
+COPY  --from=builder /app/target/customer-service.jar ./customer-service.jar
+
+EXPOSE 8080
+
+ENTRYPOINT ["java","-jar","./customer-service.jar"]

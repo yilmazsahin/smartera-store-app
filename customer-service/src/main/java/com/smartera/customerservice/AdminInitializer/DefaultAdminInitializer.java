@@ -18,7 +18,7 @@ public class DefaultAdminInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        if (customerRepository.findByEmail("administrator@mail.com") == null) {
+        if (!customerRepository.findByEmail("administrator@mail.com").isEmpty()) {
             Customer admin = new Customer();
             admin.setEmail("administrator@mail.com");
             admin.setFirstName("Admin");

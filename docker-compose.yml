@@ -1,59 +1,84 @@
-version: '3.9'
-
-networks:
-  my-network:
+version: '3.8'
 
 services:
-  # MySQL service
 
-  mysql:
-    image: mysql:8.0
-    restart: always
-    command: --default-authentication-plugin=mysql_native_password
-    environment:
-      MYSQL_DATABASE: smartera-management-system
-      MYSQL_USER: root
-      MYSQL_PASSWORD: Y1lmaz090909y
-    volumes:
-      - mysql_data:/var/lib/mysql
+  # MySQL service
+  mysqldb:
+    image: mysql:8.3.0
+    container_name: mysqldb
     ports:
       - "3307:3306"
-
+    environment:
+      MYSQL_DATABASE: smartera-management-system
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - mysql-data:/var/lib/mysql
     networks:
       - my-network
 
   # Backend services (customer-service and order-service)
   customer-service:
-    build: ./customer-service
-    restart: no
+    build:
+      context: ./customer-service
+      dockerfile: Dockerfile
+    image: customer-service
+    container_name: customer-service
     depends_on:
-      - mysql
+      - mysqldb
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/smartera-management-system
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     ports:
       - "8080:8080"
     networks:
       - my-network
 
   order-service:
-    build: ./order-service
-    restart: unless-stopped
+    build:
+      context: ./order-service
+      dockerfile: Dockerfile
+    image: order-service
+    container_name: order-service
     depends_on:
-      - mysql
+      - mysqldb
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/smartera-management-system
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     ports:
       - "8081:8081"
     networks:
       - my-network
 
   # Angular application
+
   ui:
-    build: ./ui
-    restart: no
+    build:
+      context: ./ui
+      dockerfile: ./Dockerfile
+    image: smartera-management-system-ui
+    container_name: smartera-management-system-ui
     ports:
       - "4200:4200"
     volumes:
       - ./ui:/app
+    depends_on:
+      - order-service
+      - customer-service
     networks:
       - my-network
 
 # Volume definition for persistent data
 volumes:
-  mysql_data: {}
+  mysql-data:
+    driver: local
+    name: mysql-db
+
+
+networks:
+  my-network:
+    driver: bridge
+    name: internal-network

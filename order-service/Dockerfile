@@ -1,19 +1,24 @@
-FROM maven:3.9.5-eclipse-temurin-21-alpine AS builder
+FROM maven:3.9.6 AS builder
+
+USER root
 
 WORKDIR /app
 
+COPY src ./
+
 COPY pom.xml ./
 
-RUN mvn dependency:go-offline
 
 COPY src src
-RUN mvn clean package -DskipTests
+RUN mvn  clean package -Dmaven.test.skip
 
-FROM eclipse-temurin:21.0.2_13-jre-jammy
-MAINTAINER yilmaz.sahin
+FROM openjdk:21
 
-WORKDIR /apps
 
-COPY ./target/order-service.jar /app/order-service.jar
+WORKDIR /app/
 
-ENTRYPOINT ["java","-jar","/app/order-service.jar"]
+COPY  --from=builder /app/target/order-service.jar ./order-service.jar
+
+EXPOSE 8081
+
+ENTRYPOINT ["java","-jar","./order-service.jar"]
