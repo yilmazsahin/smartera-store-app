@@ -13,12 +13,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class DefaultAdminInitializer implements CommandLineRunner {
     @Autowired
-
     private CustomerRepository customerRepository;
 
     @Override
     public void run(String... args) throws Exception {
-        if (!customerRepository.findByEmail("administrator@mail.com").isEmpty()) {
+        if (customerRepository.findByEmail("administrator@mail.com").isEmpty()) {
             Customer admin = new Customer();
             admin.setEmail("administrator@mail.com");
             admin.setFirstName("Admin");

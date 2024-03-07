@@ -2,23 +2,22 @@ FROM maven:3.9.6 AS builder
 
 USER root
 
-WORKDIR /app
+
+WORKDIR /smartera/app/src
 
 COPY src ./
 
-COPY pom.xml ./
+COPY pom.xml ../
 
-
-COPY src src
-RUN mvn  clean package -Dmaven.test.skip
+RUN mvn -f /smartera/app/pom.xml clean package -Dmaven.test.skip
 
 FROM openjdk:21
 
 
-WORKDIR /app/
+WORKDIR /smartera/lib/
 
-COPY  --from=builder /app/target/order-service.jar ./order-service.jar
+COPY  --from=builder /smartera/app/target/order-service.jar ./order-service.jar
 
 EXPOSE 8081
 
-ENTRYPOINT ["java","-jar","./order-service.jar"]
+ENTRYPOINT ["java","-jar","/smartera/lib/order-service.jar"]
