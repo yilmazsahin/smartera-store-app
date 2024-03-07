@@ -96,7 +96,7 @@ public class OrderService {
 
     @Transactional
     public void addProductToOrder(Long orderId, Long productId) {
-        // todo check validations
+
         var orderProductId = OrderProductId.of(orderId, productId);
         var optionalOrderProduct = orderProductRepository.findById(orderProductId);
         if (optionalOrderProduct.isPresent()) {
