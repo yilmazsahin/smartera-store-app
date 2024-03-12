@@ -1,12 +1,7 @@
 package com.smartera.customerService.service;
-
 import com.smartera.customerservice.entity.Customer;
-import com.smartera.customerservice.entity.CustomerForTest;
-import com.smartera.customerservice.repository.CustomerRepoForTestClass;
 import com.smartera.customerservice.repository.CustomerRepository;
 import com.smartera.customerservice.service.CustomerService;
-import com.smartera.customerservice.service.CustomerServiceForTest;
-import com.smartera.customerservice.service.InformationService;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,9 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -29,40 +22,20 @@ import static org.mockito.Mockito.*;
 public class CustomerServiceTest {
     @Mock
     private CustomerRepository customerRepository;
-    @Mock
-    private CustomerRepoForTestClass customerRepoForTestClass;
-    @Mock
-    private InformationService informationService;
+
     @InjectMocks
     private CustomerService customerService;
-    @InjectMocks
-    private CustomerServiceForTest customerServiceForTest;
+
 
 
     @Before
     public void setUp() throws Exception {
-        customerServiceForTest = new CustomerServiceForTest();
-        customerRepoForTestClass = Mockito.mock(CustomerRepoForTestClass.class);
-        informationService = Mockito.mock(InformationService.class);
+
         customerService.setCustomerRepository(customerRepository);
-        customerServiceForTest.setCustomerRepoForTestClass(customerRepoForTestClass);
-        customerServiceForTest.setInformationService(informationService);
 
     }
 
-    @Test
-    public void test_create_customer() {
-        CustomerForTest customer = new CustomerForTest();
-        customerServiceForTest.createCustomer(customer);
 
-        //  We need to check !!!!
-        System.out.println("**************************************");
-        Mockito.verify(informationService).sendEmailToNewCustomer(customer);
-        Mockito.verify(customerRepoForTestClass).save(customer);
-
-        System.out.println("Customer has been saved successfully: " + customer);
-        System.out.println("**************************************");
-    }
 
     @Test
     public void testCreateCustomer() {
@@ -76,9 +49,9 @@ public class CustomerServiceTest {
         customer.setOrderAuthority(true);
         customer.setPassword("12345");
         customer.setPhoneNumber("05055555555");
-
+        when(customerRepository.save(any())).thenReturn(customer);
         //When
-        when(customerRepository.save(customer)).thenReturn(customer);
+
         Customer savedCustomer = customerService.saveCustomer(customer);
 
 
@@ -90,7 +63,7 @@ public class CustomerServiceTest {
     }
 
     @Test
-    public void test_check_customer_order_authority_customer_not_found() {
+    public void testDeleteCustomer_return_true_when_exists_customer_and_customer_delete_after() {
 
         //Given
         Long customerId = 99L;

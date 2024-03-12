@@ -32,7 +32,6 @@ public class OrderService {
         this.productService = productService;
     }
 
-
     public Optional<List<Order>> getOrdersByCustomerId(Long customerId) {
         List<Order> orders = orderRepository.findOrdersByCustomerId(customerId);
         return Optional.ofNullable(orders);
@@ -131,4 +130,7 @@ public class OrderService {
         }
     }
 
+    public void setOrderRepository(OrderRepository orderRepository) {
+        this.orderRepository = orderRepository;
+    }
 }

@@ -1,7 +1,5 @@
 package com.smartera.orderservice.service;
 
-import com.smartera.orderservice.api.CustomerApi;
-import com.smartera.orderservice.entity.Order;
 import com.smartera.orderservice.entity.Product;
 import com.smartera.orderservice.repository.OrderRepository;
 import com.smartera.orderservice.repository.ProductRepository;
@@ -24,6 +22,10 @@ public class ProductService {
         this.productRepository = productRepository;
 
         this.orderRepository = orderRepository;
+    }
+
+    public void setProductRepository(ProductRepository productRepository) {
+        this.productRepository = productRepository;
     }
 
     public List<Product> getAllProducts() {
@@ -54,9 +56,12 @@ public class ProductService {
 
     }
 
-    public void deleteProduct(Long id) {
-        Product product = getProductById(id);
-        productRepository.deleteById(id);
+    public boolean deleteProduct(Long id) {
+        if (productRepository.existsById(id)) {
+            productRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 
 
