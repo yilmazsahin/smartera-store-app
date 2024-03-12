@@ -25,7 +25,7 @@ public class CustomerApi {
             ApiResponse<Boolean> response = restTemplate.getForObject(url, ApiResponse.class);
             return Optional.ofNullable(response)
                     .map(ApiResponse::getBody)
-                    .orElse(false);
+                    .orElse(true);
         } catch (Exception e) {
             System.err.println(e);
             return false;

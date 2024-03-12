@@ -1,11 +1,12 @@
 package com.smartera.customerservice.service;
 
 import com.smartera.customerservice.entity.Customer;
+import com.smartera.customerservice.entity.CustomerForTest;
 import com.smartera.customerservice.entity.Order;
+import com.smartera.customerservice.repository.CustomerRepoForTestClass;
 import com.smartera.customerservice.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -18,9 +19,15 @@ import java.util.Optional;
 @Service
 public class CustomerService {
 
-    private final CustomerRepository customerRepository;
+    private CustomerRepository customerRepository;
     private final String orderServiceUrl = "http://localhost:8081/api/orders";
     private final RestTemplate restTemplate;
+
+
+    public void setCustomerRepository(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
+    }
+
 
     @Autowired
     public CustomerService(CustomerRepository customerRepository, RestTemplate restTemplate) {

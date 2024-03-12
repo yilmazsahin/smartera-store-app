@@ -4,10 +4,10 @@ services:
 
   # Postgres service
   postgresdb:
-    container_name: postgresdb
+    container_name: postgres
     image: postgres
     ports:
-      - "5432:5432"
+      - "5433:5432"
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -26,12 +26,13 @@ services:
     depends_on:
       - postgresdb
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresdb:5432/smartera-management-system
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/smartera-management-system
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     ports:
       - "8080:8080"
+
 
   order-service:
     build:
@@ -42,7 +43,7 @@ services:
     depends_on:
       - postgresdb
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresdb:5432/smartera-management-system
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/smartera-management-system
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
@@ -50,6 +51,15 @@ services:
       - "8081:8081"
 
   # Angular application
+
+
+  rabbitmq:
+    image: rabbitmq:3.13-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
 
   ui:
     build:
@@ -69,5 +79,5 @@ services:
 volumes:
   postgres-data:
     driver: local
-    name: postgres-db
+    name: postgres
 

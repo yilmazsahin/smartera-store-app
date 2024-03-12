@@ -5,11 +5,11 @@ import com.smartera.orderservice.entity.Order;
 import com.smartera.orderservice.entity.OrderDTO;
 import com.smartera.orderservice.entity.Product;
 import com.smartera.orderservice.mapper.Mapper;
+import com.smartera.orderservice.messageQueue.MessageSender;
 import com.smartera.orderservice.service.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,11 +22,12 @@ import java.util.Optional;
 @RequestMapping("api/orders")
 public class OrderController {
     private final OrderService orderService;
-    private RestTemplate restTemplate;
+    private final MessageSender messageSender;
 
-    public OrderController(OrderService orderService, RestTemplate restTemplate) {
+
+    public OrderController(OrderService orderService, MessageSender messageSender) {
         this.orderService = orderService;
-        this.restTemplate = restTemplate;
+        this.messageSender = messageSender;
 
 
     }
@@ -42,6 +43,9 @@ public class OrderController {
     public ResponseEntity<OrderDTO> createOrder(@RequestBody Order order) throws Exception {
         Order createdOrder = orderService.saveOrder(order);
         var dto = Mapper.toOrderDTO(createdOrder);
+
+        String message = "Your order created succesfully: " + createdOrder.getId();
+        messageSender.sendMessage(message);
         return ResponseEntity.ok(dto);
     }
 
